@@ -1,7 +1,42 @@
+// The function that will create the medal table
 function createMedalTable(medals) {
-    // Parse the medal data to produce a medaltable
-    // The winner gets 3 points, second place 2 points and third place 1 point
-    return
+
+    // Variable for the medal table
+    const medalTable = {};
+
+    // Variable for the points system: 1st Place gets 3 points, 2nd place 2 points and 3rd place 1 point
+    const medalPoints = {
+      1: 3,
+      2: 2,
+      3: 1
+    };
+
+    // Loop that builds the medal table 
+    for(let event of medals) {
+      const podiumResult = event.podium;
+
+      // Declares input data and splits sring into medal postion and country
+      for(let positionData of podiumResult) {
+        const temp = positionData.split(".");
+
+        // Declares first part of the podium data as medal position
+        const position = temp[0];
+
+        // Declares 2nd part of the podium data as the country
+        const country = temp[1];
+        
+        // Looks for country in medal table
+        if(!(country in medalTable)) {
+          medalTable[country] = 0;
+        }
+
+        // Builds with the medal table using the data
+        medalTable[country] = medalTable[country] + medalPoints[position];
+      }
+    }
+
+    // Displays the medal table 
+    return medalTable;
 }
 
 describe("Medal Table Generator", () => {
